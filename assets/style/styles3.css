@@ -545,6 +545,41 @@ li{
 	}
 }
 
+.mobile{
+	display: none;
+}
+
+
+@media screen and (max-width: 1100px) {
+	
+	.account_mobile{
+		display: none;
+	}
+
+	.mobile{
+		margin: 0 auto;
+		width: 70vw;
+		margin-top: 40%;
+		color: black;
+		display: block;
+	}
+}
+
+@media screen and (max-width: 1100px) {
+	
+	.main_mobile{
+		display: none;
+	}
+
+	.mobile{
+		margin: 0 auto;
+		width: 70vw;
+		margin-top: 40%;
+		color: black;
+		display: block;
+	}
+}
+
 
 
 
