@@ -4,14 +4,14 @@ let thead = document.querySelector('thead')
 let result = document.querySelector('.result')
 let html = document.querySelector('.index')
 function getInputValue(){
-    var inputVal = document.getElementById("myInput").value;
+    let inputVal = document.getElementById("myInput").value;
        if(inputVal == "")
     {
         alert("Please enter something in the field");
     }
 
     html.style.background='none'
-    
+    thead.innerHTML='';      
 
     const app = new XMLHttpRequest();
     const url = "https://www.googleapis.com/books/v1/volumes?q="+ inputVal+"&maxResults=20"
@@ -21,11 +21,10 @@ function getInputValue(){
   if (this.status >= 200 && this.status < 400) {
     // Success!
     var data = JSON.parse(this.response);
-    console.log(data);
     table.style.display="block"
 
     for(let i=0;i<data.items.length;i++)
-    {   
+    {     
          let tr = document.createElement('tr')
         thead.appendChild(tr)
   
@@ -33,7 +32,14 @@ function getInputValue(){
         thead.appendChild(td)
         let img = document.createElement('img')
         img.className="book-img"
-        let url = data.items[i].volumeInfo.imageLinks.thumbnail
+        let url = ''
+        if( data.items[i].volumeInfo.imageLinks!=undefined){
+             url = data.items[i].volumeInfo.imageLinks.thumbnail
+
+        }else{
+            url = 'https://via.placeholder.com/150/'
+
+        }
         img.setAttribute('src', url)
         td.appendChild(img)
 
@@ -53,7 +59,9 @@ function getInputValue(){
 
         let isbn = document.createElement('p')
         isbn.className="isbn"
-        isbn.innerHTML= 'ISBN - '+ data.items[i].volumeInfo.industryIdentifiers[0].identifier
+        if(data.items[i].volumeInfo.industryIdentifiers){
+            isbn.innerHTML= 'ISBN - '+ data.items[i].volumeInfo.industryIdentifiers[0].identifier
+        }
         td2.appendChild(isbn)
     
 
@@ -67,7 +75,6 @@ function getInputValue(){
         button.textContent="Ajouter le livre"
         td2.appendChild(button)
         button.addEventListener('click',()=>{
-
             let div_input = document.createElement('div')
             div_input.className="div_input"
             body.appendChild(div_input)
